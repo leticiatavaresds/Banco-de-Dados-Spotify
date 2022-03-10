@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %} Musica - Spotify Cidades DB {% endblock %}
+{% block content %}
+  <table class="table">
+    <tbody>
+      
+      {% for i in range(musicas |length) %}
+        <tr>
+          <th scope="row"><img src="data:;base64,{{images[i]}}" width="150" height="150"/> </th>  
+          <th scope="row">
+              <div>
+              <h2>{{ musicas[i].MusicaNome | title }}</h2>
+              <h5>{{ musicas[i].ArtistaNome | title }}</h5>                
+            </div>
+          </th>  
+          <th> <iframe src="https://open.spotify.com/embed/track/{{musicas[i].ID}}" width="300" height="80" frameborder="0" 
+              allowtransparency="true" allow="encrypted-media"></iframe>  </th>             
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+
+    <nav class="navbar navbar-expand-lg" style="background-color: black; height: 100px;">
+      
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><i class="fa fa-spotify" style="color: #039855; font-size: 3em";></i></a>
+
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                
+          <form class="d-flex" method="GET" action = "/">
+            <input class="form-control me-2" style="padding: 0px;" type="search" name="search" 
+            placeholder="Search" aria-label="Search" {% if search %}value="{{ search }} {% endif %}">
+            
+            <div class="song-rtist-genre-option" style="margin-right:100px">
+              <select id="suggestion-options" name="suggestion-options">
+              <option  selected="selected" id="song" value="song" >Música</option>
+              <option id="artist" value="artist">Artista</option>
+              <option id="album" value="album">Albúm</option>
+              <option id="cidade" value="cidade" class="not-2mix">Cidade</option>
+              </select>  
+            </div>
+            <button class="btn btn-outline-success" style = "position: absolute; left: 500px" type="submit">Buscar</button>
+
+            <div class="collapse navbar" ></div>
+              <div class="wrap-collabsible" style="position: absolute; left: 100px; top: 5px"> 
+                <input id="collapsible3" class="toggle" type="checkbox"> 
+                  <label for="collapsible3" class="lbl-toggle" tabindex="0">+ Opções</label>
+                <div class="collapsible-content">
+                    <div class="content-inner" style="padding-left: 52px;"> <span class = "SliderText">Triste</span>
+                      <input type="range" min="-1" max="1" value="0" step="0.2" class="slider" name="RangeHappy"><span class = "SliderText">Feliz</span></div> 
+                    <div class="content-inner" style="padding-left: 47px;"> <span class = "SliderText">Calmo</span>
+                      <input type="range" min="0" max="1" value="0.5" step="0.1" class="slider" name="RangeEnergy"><span class = "SliderText">Energético</span></div> 
+                    <div class="content-inner" style="padding-left: -30px;"> <span class = "SliderText">Instrumental</span>
+                      <input type="range" min="0" max="1" value="0.5" step="0.1" class="slider" name="RangeVocal"><span class = "SliderText">Vocal</span></div> 
+                    <div class="content-inner" style="padding-left: 45px;"> <span class = "SliderText">Parado</span>
+                      <input type="range" min="0" max="1" value="0.5" step="0.1" class="slider" name="RangeDance"><span class = "SliderText">Dançante</span></div> 
+
+                      <div class="content-inner"  style="padding-left: 52px; color:#fff"> 
+                        <div class="container">
+                          <label class="container" style="font-size: 15px; font-weight: bold;">Não Explícita
+                            <input type="checkbox" id =checkexplicit name = "CheckExplicit">
+                            <span class="checkmark"></span>
+                          </label>
+                        </div>
+
+                        <form id="package_form" action = "/" method="GET">
+                          <input class="btn btn-outline-success"  value="Busca Personalizada" style = "margin-left: 125px" type="submit" name = searchSpecial value="Send Request">                          
+                        </form>
+
+       
+                        
+                      </div>
+
+
+                    
+                    </div>
+
+                    
+              </div>
+            </div>            
+
+          </form>    
+          
+
+          <form action="/ranking_tipo" method="GET">
+            <div class="dropdown" style = "position: absolute; right: 50px; top: 25%">
+              <select onchange="this.form.submit();" id='drop' name="cidadeSel" value="{{cidadeSel}}" class="Input" style = "width: 180px; border-radius:10px; font-size: 20px;" >
+                <optgroup label="Cidades">
+                  <option class='keuze' style = "cursor: pointer;" name="cidadeSel2" value ="Cidade"><strong>Ranking Localidades</strong></option>  
+                  {% for cidade in cidades %}
+                  <option class='keuze' style = "cursor: pointer;" name="cidadeSel2" value ="cidade_{{cidade['Nome']}}"><strong>{{cidade['Nome']}}</strong></option>
+                  {% endfor %}
+                </optgroup>
+                <optgroup label="Estados">
+                  {% for estado in estados %}
+                  <option class='keuze' style = "cursor: pointer;" name="cidadeSel1" value ="estado_{{estado['Nome']}}"><strong>{{estado['Nome']}}</strong></option>
+                  {% endfor %}
+                </optgroup>
+                <optgroup label="Região">
+                  {% for regiao in regioes%}
+                  <option class='keuze' style = "cursor: pointer;" name="cidadeSel3" value ="regiao_{{regiao['Regiao']}}"><strong>{{regiao['Regiao']}}</strong></option>
+                  {% endfor %}
+                </optgroup>
+                </select>  
+              </div>
+          </form>
+
+      </div>
+    </nav>
+  </head>
+
+  <body>  
+
+  <div id = "Ranking" style="height: 100px; margin-top: 50px; align-content: center;" >
+    <h2 style = "text-align: center;">{{cidade}} </h2>    
+    <form action="/ranking" method="GET">
+      <input style = "position: relative; margin-left: 10%" onchange="this.form.submit();" id='escolhaData' name="semana" value="{{musicas[0].Data}}" type="date" min="2021-10-14" max="2022-03-03" step="7">
+    </form>
+
+  </div>
+
+    <div id = "Tabela" >
+
+      <div id="content" class="container">
+      
+        <table class="table">
+
+
+              <tbody>   
+                
+                {% for i in range(musicas |length) %}
+                  <tr>
+                    <th scope="row"><h5>{{musicas[i].Posicao}}</h5></th>  
+                    <th scope="row"><img src="data:;base64,{{images[i]}}" width="100" height="100"/> </th>  
+                    <th scope="row">
+                        <div>
+                        <h3>{{ musicas[i].MusicaNome | title }}</h3>
+                        <h5>{{ musicas[i].ArtistaNome | title }}</h5>                
+                      </div>
+                    </th>  
+                    <th> <iframe src="https://open.spotify.com/embed/track/{{musicas[i].ID}}" width="300" height="80" frameborder="0" 
+                        allowtransparency="true" allow="encrypted-media"></iframe>  </th>             
+                  </tr>
+                {% endfor %}
+              </tbody>
+        </table>
+      </div>
+    </div>
+
+      
+  </body>
+</html>
+  
+
+<style>
+  label {
+  display: block;
+  font: 1rem 'Fira Sans', sans-serif;
+  }
+
+  input,
+  label {
+      margin: .4rem 0;
+  }
+
+.slider {
+  -webkit-appearance: none;
+  width: 300px;
+  height: 8px;
+  background: #000;
+  outline: none;
+  border: 5px solid #747a78;
+  border-radius: 8px;
+}
+
+.SliderText {
+    max-height: 0px; 
+    margin-right: 6px;
+    margin-left: 10px;
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+} 
+
+
+/* for chrome/safari */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 40px;
+  background: #000;
+  cursor: pointer;
+  border: 3.5px solid #039855;
+  border-radius: 5px;
+}
+
+/* for firefox */
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 60px;
+  background: #000;
+  cursor: pointer;
+  border: 5px solid #039855;
+  border-radius: 4px;
+}
+
+input[type='checkbox'] { display: none; } 
+
+.wrap-collabsible { 
+    margin: 1.2rem 0; 
+    position:absolute;
+    left: 50%;} 
+
+.lbl-toggle { display: block; 
+    max-width: 200px;
+    font-style: inherit;
+    font-weight: inherit;
+    font-size: 1.2rem; 
+    text-transform: uppercase; 
+    text-align: center; 
+    padding: 1rem; 
+    color: rgb(255, 255, 255);
+    cursor: pointer; 
+    border-radius: 7px; 
+    transition: all 0.25s ease-out; } 
+
+.lbl-toggle:hover { 
+    color: rgb(146, 140, 140); } 
+    
+.lbl-toggle::before { 
+    content: ' '; 
+    display: inline-block; 
+    border-top: 5px solid transparent; 
+    border-bottom: 5px solid transparent; 
+    border-left: 5px solid currentColor; 
+    vertical-align: middle; 
+    margin-right: .7rem; 
+    transform: translateY(-2px); 
+    transition: transform .2s ease-out; } 
+    
+.toggle:checked+.lbl-toggle::before { 
+    transform: rotate(90deg) translateX(-3px); } 
+
+.collapsible-content {    
+    max-height: 0px; 
+    margin-left: -150px;
+    overflow: hidden; 
+    transition: max-height .25s ease-in-out;} 
+
+.toggle:checked + .lbl-toggle + .collapsible-content { 
+    max-height: 1500px; }
+
+.toggle:checked+.lbl-toggle { 
+    border-bottom-right-radius: 0; 
+    border-bottom-left-radius: 0; } 
+
+.collapsible-content .content-inner { 
+  position: relative;
+  z-index: 9998;
+  background: rgb(0, 0, 0); 
+  /* border-bottom: 1px solid rgba(0, 105, 255, .45);  */
+  padding: 15px 0px 30px 0px;} 
+
+.Tabela { 
+  position: relative;}
+
+.search{
+  position: absolute;
+  top: 50%;
+}
+
+
+select#suggestion-options {
+    border-radius: 5px;
+    width: 80px;
+}
+
+select#suggestion-options {
+    border-radius: 5px;
+    width: 80px;
+}
+
+.arrow-advanced {
+    cursor: pointer;
+    font-style: inherit;
+    font-weight: inherit;
+    color: rgb(255, 255, 255);
+}
+
+select {
+    width: 100%;
+    border-left: 1px solid #7e7c7c;
+    font-size: 16px!important;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    padding-left: 5px;
+    border: 1px solid #7e7c7c;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #03683a;
+}
+  .d-flex {
+    position: absolute;
+    left: 300px;
+  }
+  .me-2{
+      width: 400px;
+  }
+  /* Style The Dropdown Button */
+.dropbtn {
+  background-color: #039855;
+  color: white;
+  padding: 4px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  width: 150px;
+  border-radius: 20px;
+  position: relative;  
+  display: inline-block;
+}
+
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {  
+  border-radius: 10px;
+  display: none;
+  position: absolute;
+  background-color: #565757fb;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 3px 3px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #03683a;
+  color: white;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #03683a;
+}
+
+/* Customize the label (the container) */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+  top: 5px;
+  left: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: white;
+}
+
+.body {
+  margin-top: 60px;
+}
+#hideAll {
+   position: fixed;
+   left: 0px; 
+   right: 0px; 
+   top: 0px; 
+   bottom: 0px; 
+   background-color: white;
+   z-index: 99; /* Higher than anything else in the document */
+
+ }
+
+
+
+</style>
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+  
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+
+  let myLabels = document.querySelectorAll('.lbl-toggle'); 
+  Array.from(myLabels).forEach(label => { label.addEventListener('keydown', e => { if (e.which === 32 || e.which === 13)
+    { e.preventDefault(); label.click(); }; }); }); 
+
+  document.getElementById("hideAll").style.display = "block";
+
+  window.onload = function() 
+  { document.getElementById("hideAll").style.display = "none"; }
+  </script>
