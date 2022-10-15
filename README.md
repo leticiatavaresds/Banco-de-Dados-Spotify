@@ -33,7 +33,7 @@ linguagens ```Python```, ```MySQL```, ```HTML```, ```CSS``` e ```JavaScript```.
 [⬆ Voltar ao topo](#banco-de-dados-e-aplicação-web-spotify)<br>
 
 # Dados
-Com o objetivo de construir um banco de dados com músicas presentes em rankings nacionais do Spotify, a primeira fonte foi o (Spotify Charts)[https://charts.spotify.com/home], um site feito por fãs que apresenta ranking de músicas mais tocadas no Spotify por região ou por gênero, no qual conseguimos dados dos rankings divididos por cidades do Brasil. Com isso, capturou-se microdados das músicas presentes nesses rankings utilizando como fonte API's fornecidas pela (Plataforma de Desenvolvimento do Spotify)[https://developer.spotify.com/]. Por fim, foram capturados, através de uma (API disponibilizada pelo IBGE)[https://servicodados.ibge.gov.br/api/docs/localidades], dados sobre a região de cada cidade que contém ranking para complementar as informações uti.
+Com o objetivo de construir um banco de dados com músicas presentes em rankings nacionais do Spotify, a primeira fonte foi o [Spotify Charts](https://charts.spotify.com/home), um site feito por fãs que apresenta ranking de músicas mais tocadas no Spotify por região ou por gênero, no qual conseguimos dados dos rankings divididos por cidades do Brasil. Com isso, capturou-se microdados das músicas presentes nesses rankings utilizando como fonte API's fornecidas pela [Plataforma de Desenvolvimento do Spotify](https://developer.spotify.com/). Por fim, foram capturados, através de uma [API disponibilizada pelo IBGE](https://servicodados.ibge.gov.br/api/docs/localidades), dados sobre a região de cada cidade que contém ranking para complementar as informações uti.
 
 ## Obtenção dos dados
 Foi utilizado um Jupyter Notebook com linguagem Python com a biblioteca Selenium, realizando web scraping, para capturar dados do site Spotify Charts referentes a
@@ -85,7 +85,7 @@ Com a modelagem conceitual concluída, foi usada a função de conversão do brM
 
 Para a criação do banco de dados relacional deste trabalho foi utilizado o sistema de gerenciamento MySQL, que possui uma biblioteca para comunicação com Python. Para alimentar o banco de dados com as tabelas criadas pela modelagem relacional, foi utilizado o script “Database_Creation.py” em Python que utiliza a biblioteca “pymysql” para realizar a comunicação com o banco e a biblioteca pandas para ler os arquivos com os dados. Após tratamento dos dados (como, por exemplo, obter a imagem pelo link e depois convertê-la em binário, renomeação de atributos e exclusão de algumas colunas dispensadas), o banco é alimentado com os dataframes de cada tabela. 
 
-A descrição de cada atributo selecionado para popular o banco de dados pode ser encontrada no (Dicionário de Dados)[https://github.com/leticiatavaresds/Banco-de-Dados-Spotify/blob/main/Data/Dicion%C3%A1rio%20Vari%C3%A1veis%20utilizadas.pdf].
+A descrição de cada atributo selecionado para popular o banco de dados pode ser encontrada no [Dicionário de Dados](https://github.com/leticiatavaresds/Banco-de-Dados-Spotify/blob/main/Data/Dicion%C3%A1rio%20Vari%C3%A1veis%20utilizadas.pdf).
 
 [⬆ Voltar ao topo](#banco-de-dados-e-aplicação-web-spotify)<br>
 
